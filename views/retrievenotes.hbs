@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+        /* Add some basic styling to the navigation bar */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav {
+ background: -webkit-linear-gradient(left, #003366,#004080,#0059b3
+, #0073e6);
+            overflow: hidden;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            margin-bottom: 2%;
+            margin-top: 2%;
+        }
+
+        nav li {
+            float: left;
+            margin-left: 7.8%;
+            font-size: larger;
+        }
+
+        nav li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        nav li a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        table {
+        width: 80%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        margin-left: 10%;
+        margin-bottom: 3%;
+         background: -webkit-linear-gradient(left, #003366,#004080,#0059b3
+, #0073e6);
+color: white;
+    }
+    th{
+        color: wheat;
+    }
+    th, td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+        padding-top: 2%;
+        padding-bottom: 2%;
+        padding-left: 2%;
+        background: -webkit-linear-gradient(left, #003366,#004080,#0059b3
+, #0073e6);
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    tr:hover {
+        background-color: #e0e0e0;
+    }
+    .heading{
+            text-align: center;
+            margin-bottom: 3%;
+            margin-top: 3%;
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <ul>
+        <li><a href="/createNotes">Create Notes</a></li>
+        <li><a href="/retrieveNotes">Retrieve Notes</a></li>
+        <li><a href="/updateNotes">Update Notes</a></li>
+        <li><a href="/deleteNotes">Delete Notes</a></li>
+        <li><a href="/">Logout</a></li>
+    </ul>
+</nav>
+
+<!-- Your content goes here -->
+<h1 class="heading">Retrieve Your Notes Here !</h1>
+
+<table id="datalist">
+
+</table>
+
+<script>
+        const getData= async ()=>{
+            let resp = await fetch ("/api/NoteHistory",{method:"GET"});
+            let data = await resp.json();
+          
+            let history = data.response;
+            console.log(history);
+            let list = ``;
+            list += `<tr>
+                    <th>Title</th>
+                    <th>Content</th>
+                    <th>Created At</th>
+                    <th>Updated At</th>
+                    </tr> `
+            history.forEach((e)=>{
+                list += `<tr>
+                    <td>${e.title}</td>
+                    <td>${e.content}</td>
+                    <td> ${e.createdAt}</td>
+                    <td> ${e.updatedAt}</td>
+                    </tr>
+                    `
+            })
+            document.getElementById('datalist').innerHTML = list;
+            console.log(data);
+        }
+        getData();
+    </script>
+
+</body>
+</html>
